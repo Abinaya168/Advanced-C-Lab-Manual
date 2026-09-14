@@ -10,11 +10,59 @@ Algorithm:
  
 Program:
 
-//type your code here
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    char data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head = NULL, *newNode, *temp;
+    char key;
+    int found = 0;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = 'A';
+    newNode->next = NULL;
+    head = newNode;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = 'B';
+    newNode->next = NULL;
+    head->next = newNode;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = 'C';
+    newNode->next = NULL;
+    head->next->next = newNode;
+
+    printf("Enter element to search: ");
+    scanf(" %c", &key);
+
+    temp = head;
+
+    while (temp != NULL) {
+        if (temp->data == key) {
+            found = 1;
+            break;
+        }
+        temp = temp->next;
+    }
+
+    if (found)
+        printf("Element %c found in the linked list.\n", key);
+    else
+        printf("Element %c not found in the linked list.\n", key);
+
+    return 0;
+}
 
 Output:
 
-//paste your output here
+<img width="1577" height="906" alt="image" src="https://github.com/user-attachments/assets/4ce2ff9b-bec0-462a-b3ec-44c26816428e" />
+
 
 
 
@@ -34,11 +82,52 @@ Algorithm:
  
 Program:
 
-//type your code here
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    char data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head = NULL, *newNode, *temp;
+    char value;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    printf("Enter element to insert: ");
+    scanf(" %c", &value);
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+    } else {
+        temp = head;
+
+        while (temp->next != NULL)
+            temp = temp->next;
+
+        temp->next = newNode;
+    }
+
+    printf("Linked List: ");
+
+    temp = head;
+    while (temp != NULL) {
+        printf("%c ", temp->data);
+        temp = temp->next;
+    }
+
+    return 0;
+}
 
 Output:
 
-//paste your output here
+<img width="1287" height="906" alt="image" src="https://github.com/user-attachments/assets/47d1a7af-3a4d-48e1-9e77-000e7dfebf26" />
+
 
  
 Result:
@@ -58,11 +147,49 @@ Algorithm:
  
 Program:
 
-//type your code here
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head, *second, *third, *temp;
+
+    head = (struct Node *)malloc(sizeof(struct Node));
+    second = (struct Node *)malloc(sizeof(struct Node));
+    third = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 10;
+    head->prev = NULL;
+    head->next = second;
+
+    second->data = 20;
+    second->prev = head;
+    second->next = third;
+
+    third->data = 30;
+    third->prev = second;
+    third->next = NULL;
+
+    temp = head;
+
+    printf("Doubly Linked List: ");
+
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    return 0;
+}
 
 Output:
+<img width="1462" height="901" alt="image" src="https://github.com/user-attachments/assets/a07c9333-64a4-4c1c-98dc-996880c3447e" />
 
-//paste your output here
 
 
 Result:
@@ -83,11 +210,56 @@ Algorithm:
  
 Program:
 
-//type your code here
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head = NULL, *newNode, *temp;
+    int value;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    printf("Enter element to insert: ");
+    scanf("%d", &value);
+
+    newNode->data = value;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+    } else {
+        temp = head;
+
+        while (temp->next != NULL)
+            temp = temp->next;
+
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+
+    printf("Doubly Linked List: ");
+
+    temp = head;
+
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    return 0;
+}
 
 Output:
 
-//paste your output here
+<img width="1347" height="886" alt="image" src="https://github.com/user-attachments/assets/b91fac20-3253-42a3-ae03-414725a942ce" />
+
 
 
 Result:
@@ -124,12 +296,92 @@ o	If the element is not found in any node, print a message indicating the elemen
 
 
 Program:
+#include <stdio.h>
+#include <stdlib.h>
 
-//type your code here
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+void deleteElement(struct Node **head, int value) {
+    struct Node *temp = *head;
+    struct Node *prev = NULL;
+
+    if (temp == NULL) {
+        printf("Linked List is empty.\n");
+        return;
+    }
+
+    if (temp->data == value) {
+        *head = temp->next;
+        free(temp);
+        printf("Element deleted successfully.\n");
+        return;
+    }
+
+    while (temp != NULL && temp->data != value) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Element not found.\n");
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+
+    printf("Element deleted successfully.\n");
+}
+
+int main() {
+    struct Node *head, *second, *third;
+    int value;
+
+    head = (struct Node *)malloc(sizeof(struct Node));
+    second = (struct Node *)malloc(sizeof(struct Node));
+    third = (struct Node *)malloc(sizeof(struct Node));
+
+    head->data = 10;
+    head->next = second;
+
+    second->data = 20;
+    second->next = third;
+
+    third->data = 30;
+    third->next = NULL;
+
+    printf("Linked List before deletion: ");
+    struct Node *temp = head;
+
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("\nEnter element to delete: ");
+    scanf("%d", &value);
+
+    deleteElement(&head, value);
+
+    printf("Linked List after deletion: ");
+    temp = head;
+
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    return 0;
+}
+
 
 Output:
+<img width="1510" height="913" alt="image" src="https://github.com/user-attachments/assets/d9ffe556-b0b3-49e1-8e1e-dacf5fc872e7" />
 
-//paste your output here
+
 
 
 
